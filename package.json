@@ -2,9 +2,17 @@
   "name": "cli-platform",
   "version": "1.0.0",
   "description": "Testing out our cli-platform",
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "cli",
+    "frontend",
+    "react",
+    "reactnative",
+    "expo",
+    "webapp-cli",
+    "tanstack"
+  ],
+  "author": "Joel Cofie<bytebard><https://github.com/jlinco>",
+  "license": "MIT",
   "type": "module",
   "exports": "./dist/index.js",
   "bin": {
