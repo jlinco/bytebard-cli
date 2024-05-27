@@ -4,6 +4,7 @@ import { logger } from "./logger.js";
 import * as p from "@clack/prompts";
 import { ProjectType } from "./scaffoldProject.js";
 
+
 export async function typeOfProjectPrompt() {
   const typeOfProject: ProjectType | unknown = await p.select({
     message: "What type of project do you want to create?",
@@ -53,4 +54,12 @@ export async function promptProject() {
     }
   );
   return sessionPrompt;
+}
+
+export async function promptWorkingFolder() {
+  const workingFolder: string | unknown = await p.text({
+    message: `Please enter your working directory. ${chalk.yellowBright.bold('Please provide the full path to your project folder or type ./ to use your current directory')}:`,
+    placeholder: `/full/path/projects/your-working-folder ${chalk.cyanBright('OR')} ./`,
+  });
+  return workingFolder;
 }

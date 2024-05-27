@@ -1,15 +1,18 @@
 {
-  "name": "cli-platform",
+  "name": "@bytebard/cli",
   "version": "1.0.0",
   "description": "Testing out our cli-platform",
   "keywords": [
-    "cli",
-    "frontend",
     "react",
-    "reactnative",
+    "cli",
+    "components",
+    "ui",
+    "react-native",
     "expo",
-    "webapp-cli",
-    "tanstack"
+    "typescript",
+    "scaffolding",
+    "tanstack-react-query",
+    "tanstack-router"
   ],
   "author": "Joel Cofie<bytebard><https://github.com/jlinco>",
   "license": "MIT",
