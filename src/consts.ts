@@ -1,24 +1,22 @@
-import path from "path";
-import { fileURLToPath } from "url";
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 const __filename = fileURLToPath(import.meta.url);
 const distPath = path.dirname(__filename);
-export const PKG_ROOT = path.join(distPath, "../");
+export const PKG_ROOT = path.join(distPath, '../');
 
 export const TITLE_TEXT = `
-
- /$$$$$$$$ /$$   /$$        /$$$$$$                               
-| $$_____/| $$  | $$       /$$__  $$                              
-| $$      | $$  | $$      | $$  \ $$  /$$$$$$   /$$$$$$   /$$$$$$$
-| $$$$$   | $$$$$$$$      | $$$$$$$$ /$$__  $$ /$$__  $$ /$$_____/
-| $$__/   | $$__  $$      | $$__  $$| $$  \ $$| $$  \ $$|  $$$$$$ 
-| $$      | $$  | $$      | $$  | $$| $$  | $$| $$  | $$ \____  $$
-| $$$$$$$$| $$  | $$      | $$  | $$| $$$$$$$/| $$$$$$$/ /$$$$$$$/
-|________/|__/  |__/      |__/  |__/| $$____/ | $$____/ |_______/ 
-                                    | $$      | $$                
-                                    | $$      | $$                
-                                    |__/      |__/                
-                                                                                                                                                                                            
+           /$$           /$$                 /$$   /$$    
+          |__/          | $$                |__/  | $$    
+  /$$$$$$  /$$ /$$$$$$$ | $$$$$$$   /$$$$$$  /$$ /$$$$$$  
+ /$$__  $$| $$| $$__  $$| $$__  $$ /$$__  $$| $$|_  $$_/  
+| $$$$$$$$| $$| $$  \ $$| $$  \ $$| $$$$$$$$| $$  | $$    
+| $$_____/| $$| $$  | $$| $$  | $$| $$_____/| $$  | $$ /$$
+|  $$$$$$$| $$| $$  | $$| $$  | $$|  $$$$$$$| $$  |  $$$$/
+ \_______/|__/|__/  |__/|__/  |__/ \_______/|__/   \___/  
+                                                          
+                                                          
+                                                          
 `;
 export const DEFAULT_TITLE = `
  /$$                   /$$               /$$                               /$$
@@ -33,5 +31,5 @@ export const DEFAULT_TITLE = `
           |  $$$$$$/                                                          
            \______/                                                           
 `;
-export const DEFAULT_APP_NAME = "einheit-app";
-export const CREATE_EH_APP = "create-eh-app";
+export const DEFAULT_APP_NAME = 'einheit-app';
+export const CREATE_EH_APP = 'create-eh-app';
