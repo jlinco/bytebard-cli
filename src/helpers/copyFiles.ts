@@ -1,6 +1,5 @@
 import chalk from 'chalk';
 import fs from 'fs-extra';
-import type { Ora } from 'ora';
 import * as p from '@clack/prompts';
 export const copyFiles = async ({
 	spinner,
@@ -10,7 +9,11 @@ export const copyFiles = async ({
 	appDir,
 	workingFolder,
 }: {
-	spinner: Ora;
+	spinner: {
+		start: (message?: string) => void;
+		stop: (message?: string) => void;
+		message: (message: string) => void;
+	};
 	srcDir: string;
 	projectDir: string;
 	projectName: string;
@@ -18,20 +21,21 @@ export const copyFiles = async ({
 	workingFolder: string;
 }) => {
 	if (!appDir) {
-		spinner.fail('Project creation failed');
+		p.cancel('Project creation failed');
 		process.exit();
 	}
 
 	if (fs.existsSync(projectDir)) {
 		if (fs.readdirSync(projectDir).length === 0) {
 			if (projectName !== '.')
-				spinner.info(
+				p.log.info(
 					`${chalk.cyan.bold(
 						projectName,
 					)} already exists but is empty, continuing...\n`,
 				);
 		} else {
-			spinner.stopAndPersist();
+			// spinner.stopAndPersist();
+			spinner.message('Waiting while you select an option');
 			const overwriteDir = await p.select({
 				message: `${chalk.redBright.bold('Warning:')} ${chalk.cyan.bold(
 					projectName,
@@ -53,10 +57,11 @@ export const copyFiles = async ({
 				initialValue: 'abort',
 			});
 			if (overwriteDir === 'abort') {
-				spinner.fail('Project creation failed');
+				spinner.stop();
+				p.cancel('Project creation failed');
 				process.exit(1);
 			}
-
+			spinner.message('Confirming overwrite');
 			const overwriteAction =
 				overwriteDir === 'clear'
 					? 'clear the directory'
@@ -66,25 +71,25 @@ export const copyFiles = async ({
 				initialValue: false,
 			});
 			if (!confirmOverwrite) {
-				spinner.fail('Aborting installation...');
+				spinner.stop();
+				p.cancel('Aborting installation...');
 				process.exit(1);
 			}
 			if (overwriteDir === 'clear') {
-				spinner.info(
+				p.log.info(
 					`Emptying ${chalk.cyan.bold(projectName)} and creating your app...\n`,
 				);
 				fs.emptyDirSync(appDir);
 			}
 		}
 	}
-	spinner.start();
-	spinner.info('Copying files....');
+	spinner.message('Copying files....');
 	fs.copySync(srcDir, projectDir);
 
 	const scaffoldedName =
 		projectName === '.' ? 'App' : chalk.cyan.bold(projectName);
 
-	spinner.succeed(
+	spinner.stop(
 		`Successfully created ${scaffoldedName} at ${chalk.cyan.bold(
 			workingFolder,
 		)}\n`,
