@@ -5,7 +5,7 @@ import { z } from 'zod';
 import { createProject } from '~/utils/scaffoldProject.js';
 import { renderHeader } from '~/utils/renderHeader.js';
 import { promptWorkingFolder, typeOfProjectPrompt } from '~/utils/prompts.js';
-import { checkFolderExists, runSuccessMessage } from '~/helpers/misc.js';
+import { checkFolderExists } from '~/helpers/misc.js';
 
 const initCommandOptionsSchema = z.object({
 	cwd: z.string(),
@@ -31,20 +31,11 @@ export const init = new Command()
 			}
 
 			const projectType = await typeOfProjectPrompt();
-			const { projectDir, projectName } = await createProject({
+			await createProject({
 				projectType,
 				workingFolder,
 			});
-			// add a check here to confirm project creation was successful
-			// before proceeding
-			// it doesn't make sense to install deps when project creation fails.
-			// also include messages in indicate the success/failure of such
-			// and exit gracefully
-			// await installDependencies({ projectDir, projectName });
 
-			// provide instructions after setup and installation
-			// has been completed
-			runSuccessMessage(projectName, projectDir);
 			process.exit();
 		} catch (error) {
 			logger.info('we have an error here....');

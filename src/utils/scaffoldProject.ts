@@ -1,10 +1,6 @@
 import chalk from 'chalk';
 import path from 'node:path';
-// import { PKG_ROOT } from "~/consts.js";
-// import * as p from "@clack/prompts";
 import { logger } from './logger.js';
-// import ora from "ora";
-// import fs from "fs-extra";
 import { promptProject } from './prompts.js';
 import { webAppInstaller } from '~/helpers/webAppInstaller.js';
 import { mobileAppInstaller } from '~/helpers/mobileAppInstaller.js';
@@ -19,7 +15,6 @@ export async function createProject({
 }) {
 	const { projectName, appDir } = await promptProject();
 	const projectDir = path.join(workingFolder, appDir);
-
 	projectType === 'webApp' &&
 		(await webAppInstaller({
 			appDir,

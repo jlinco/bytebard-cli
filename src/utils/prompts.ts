@@ -1,10 +1,13 @@
 import chalk from 'chalk';
-import { DEFAULT_APP_NAME } from '~/consts.js';
-import { logger } from './logger.js';
 import * as p from '@clack/prompts';
 import type { ProjectType } from './scaffoldProject.js';
 
 export async function typeOfProjectPrompt() {
+	p.intro(
+		`${chalk.greenBright.bold(
+			"Welcome to bytebard CLI. Let's get started...",
+		)}`,
+	);
 	const typeOfProject: ProjectType | unknown = await p.select({
 		message: 'What type of project do you want to create?',
 		options: [
@@ -23,8 +26,13 @@ export async function typeOfProjectPrompt() {
 				value: 'crossPlatformApp',
 			},
 		],
-		initialValue: 'webApp',
 	});
+
+	if (p.isCancel(typeOfProject)) {
+		p.cancel('Operation cancelled');
+		p.outro(`${chalk.redBright.bold('Exiting the CLI!')}`);
+		process.exit(0);
+	}
 	return typeOfProject;
 }
 
@@ -35,23 +43,34 @@ export async function promptProject() {
 				p.text({
 					message: 'Please enter your project name:',
 					placeholder: 'my-project',
-					initialValue: `${DEFAULT_APP_NAME}`,
+					validate: (value) => {
+						if (value.length === 0) return 'A project name is required';
+						return;
+					},
 				}),
 			appDir: () =>
 				p.text({
 					message: 'Please enter your directory name:',
 					placeholder: 'my-project-folder',
-					initialValue: `${DEFAULT_APP_NAME}`,
+					validate: (value) => {
+						if (value.length === 0) return 'A directory name is required';
+						return;
+					},
 				}),
 		},
 		{
 			onCancel: () => {
-				logger.info('Project creation canceled');
 				p.cancel('Operation cancelled');
+				p.outro(`${chalk.redBright.bold('Exiting the CLI!')}`);
 				process.exit(0);
 			},
 		},
 	);
+	if (p.isCancel(sessionPrompt)) {
+		p.cancel('Operation cancelled');
+		p.outro(`${chalk.redBright.bold('Exiting the CLI!')}`);
+		process.exit(0);
+	}
 	return sessionPrompt;
 }
 
@@ -64,5 +83,10 @@ export async function promptWorkingFolder() {
 			'OR',
 		)} ./`,
 	});
+	if (p.isCancel(workingFolder)) {
+		p.cancel('Operation cancelled');
+		p.outro(`${chalk.redBright.bold('Exiting the CLI!')}`);
+		process.exit(0);
+	}
 	return workingFolder;
 }
